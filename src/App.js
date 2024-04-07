@@ -59,6 +59,7 @@ function App() {
     return (
       <div>
         <p>Vous avez perdu ! Le mot était {mot}.</p>
+        <img src={imagesPendu[6]} alt="Pendu" />
         <button onClick={demarrerNouveauJeu}>Rejouer</button>
       </div>
     );
@@ -68,6 +69,7 @@ function App() {
     return (
       <div>
         <p>Bravo ! Vous avez deviné le mot {mot}.</p>
+        <img src={imagesPendu[6 - essais]} alt="Pendu" />
         <button onClick={demarrerNouveauJeu}>Rejouer</button>
       </div>
     );

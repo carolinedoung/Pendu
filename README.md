@@ -1,1 +1,1 @@
-Jeu du pendu 
+Jeu du pendu en React

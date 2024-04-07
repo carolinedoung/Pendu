@@ -1,7 +1,23 @@
 import './App.css';
 import React, { useState, useEffect } from 'react';
+import hangman0 from './images/Hangman-0.png';
+import hangman1 from './images/Hangman-1.png';
+import hangman2 from './images/Hangman-2.png';
+import hangman3 from './images/Hangman-3.png';
+import hangman4 from './images/Hangman-4.png';
+import hangman5 from './images/Hangman-5.png';
+import hangman6 from './images/Hangman-6.png';
 
 function App() {
+  const imagesPendu = [
+    hangman0,
+    hangman1,
+    hangman2,
+    hangman3,
+    hangman4,
+    hangman5,
+    hangman6,
+  ];
   const [mot, setMot] = useState("");
   const [lettresDevinees, setLettresDevinees] = useState([]);
   const [essais, setEssais] = useState(6);
@@ -60,6 +76,7 @@ function App() {
   return (
     <div>
       <h1>Jeu du pendu</h1>
+      <img src={imagesPendu[6 - essais]} alt="Pendu" />
       <p>Mot à deviner: {mot.split('').map(lettre => lettresDevinees.includes(lettre) || lettre === '-' ? lettre : '_').join(' ')}</p>        
       <p>Lettres déjà devinées: {lettresDevinees.join(', ')}</p>
       <p>Essais restants: {essais}</p>

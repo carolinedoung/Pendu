@@ -1,25 +1,55 @@
-import logo from './logo.svg';
 import './App.css';
+import React, { useState, useEffect } from 'react';
+
 
 function App() {
+  const [mot, setMot] = useState("");
+  const [lettresDevinees, setLettresDevinees] = useState([]);
+  const [essais, setEssais] = useState(6);
+
+  useEffect(() => {
+    fetch('https://node-hangman-api-production.up.railway.app/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+        setMot(data.word);
+        // Première lettre du mot à deviner 
+      setLettresDevinees([data.word[0]]);
+      });
+  }, []);
+
+  function handleClicLettre(lettre) {
+    setLettresDevinees([...lettresDevinees, lettre]);
+
+    if (!mot.includes(lettre)) {
+      setEssais(essais - 1);
+    }
+  }
+
+  if (essais === 0) {
+    return <p>Vous avez perdu ! Le mot était {mot}.</p>;
+  }
+
+  if (mot.split('').every(lettre => lettresDevinees.includes(lettre))) {
+    return <p>Bravo ! Vous avez deviné le mot {mot}.</p>;
+  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h1>Jeu du pendu</h1>
+      <p>Mot à deviner: {mot.split('').map(lettre => lettresDevinees.includes(lettre) ? lettre : '_').join(' ')}</p>        <p>Lettres déjà devinées: {lettresDevinees.join(', ')}</p>
+        <p>Essais restants: {essais}</p>
+        <p>Cliquez sur une lettre pour la deviner:</p>
+        {'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').map(lettre =>
+          <button key={lettre} onClick={() => handleClicLettre(lettre)}>
+            {lettre}
+          </button>
+        )}
     </div>
   );
 }
-
 export default App;

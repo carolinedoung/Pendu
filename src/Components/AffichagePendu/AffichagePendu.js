@@ -1,3 +1,4 @@
+import './AffichagePendu.css';
 import React from 'react';
 import hangman0 from './images/Hangman-0.png';
 import hangman1 from './images/Hangman-1.png';

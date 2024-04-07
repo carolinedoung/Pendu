@@ -1,7 +1,8 @@
+import './App.css';
 import React, { useState, useEffect } from 'react';
-import AffichagePendu from './Components/AffichagePendu/AffichagePendu';
-import AffichageMot from './Components/AffichageMot/AffichageMot';
 import AffichageEssais from './Components/AffichageEssais/AffichageEssais';
+import AffichageMot from './Components/AffichageMot/AffichageMot';
+import AffichagePendu from './Components/AffichagePendu/AffichagePendu';
 import BoutonLettre from './Components/BoutonLettre/BoutonLettre';
 import LettresDevinees from './Components/LettresDevinees/LettresDevinees'; 
 
@@ -36,14 +37,15 @@ function App() {
   }
 
   function handleClicLettre(lettre) {
-    if (!lettresDevinees.includes(lettre)) {
-      setLettresDevinees([...lettresDevinees, lettre]);
-  
-    if (!mot.normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(lettre)) {
-      setEssais(essais - 1);
+    const lettreNormalisee = lettre.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    if (!lettresDevinees.includes(lettreNormalisee)) {
+      setLettresDevinees([...lettresDevinees, lettreNormalisee]);
+
+      if (!mot.normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(lettreNormalisee)) {
+        setEssais(essais - 1);
+      }
     }
   }
-}
 
   function handleRejouer() {
     demarrerNouveauJeu();
@@ -60,31 +62,33 @@ function App() {
   if (gameOver) {
     if (essais === 0) {
       return (
-        <div>
+        <div className="jeu-fin">
+          <h1>Jeu du pendu</h1>
           <p>Vous avez perdu ! Le mot était {mot}.</p>
           <AffichagePendu essais={0} />
-          <button onClick={handleRejouer}>Rejouer</button>
+          <button className="btn-fin" onClick={handleRejouer}>Rejouer</button>
         </div>
       );
     } else {
       return (
-        <div>
+        <div className="jeu-fin">
+          <h1>Jeu du pendu</h1>
           <p>Bravo ! Vous avez deviné le mot {mot}.</p>
           <AffichagePendu essais={essais} />
-          <button onClick={handleRejouer}>Rejouer</button>
+          <button className="btn-fin" onClick={handleRejouer}>Rejouer</button>
         </div>
       );
     }
   }
 
   return (
-    <div>
+    <div className="jeu">
       <h1>Jeu du pendu</h1>
       <AffichagePendu essais={essais} />
       <AffichageMot mot={mot} lettresDevinees={lettresDevinees} />
       <LettresDevinees lettresDevinees={lettresDevinees} />
       <AffichageEssais essais={essais} />
-      <div>
+      <div className="container-lettres">
         {'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').map(lettre =>
           <BoutonLettre key={lettre} lettre={lettre} handleClicLettre={handleClicLettre} />
         )}

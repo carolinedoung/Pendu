@@ -1,8 +1,9 @@
 import React from 'react';
+import './BoutonLettre.css';
 
 function BoutonLettre({ lettre, handleClicLettre }) {
   return (
-    <button onClick={() => handleClicLettre(lettre)}>
+    <button className="btn-lettre" onClick={() => handleClicLettre(lettre)}>
       {lettre}
     </button>
   );

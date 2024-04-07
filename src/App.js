@@ -5,6 +5,8 @@ import AffichageMot from './Components/AffichageMot/AffichageMot';
 import AffichagePendu from './Components/AffichagePendu/AffichagePendu';
 import BoutonLettre from './Components/BoutonLettre/BoutonLettre';
 import LettresDevinees from './Components/LettresDevinees/LettresDevinees'; 
+import catcry from './images/catcry.jpg';
+import cathappy from './images/cathappy.jpg';
 
 function App() {
   const [mot, setMot] = useState("");
@@ -64,8 +66,9 @@ function App() {
       return (
         <div className="jeu-fin">
           <h1>Jeu du pendu</h1>
-          <p>Vous avez perdu ! Le mot était {mot}.</p>
+          <p>Vous avez perdu T T ! Le mot était {mot}.</p>
           <AffichagePendu essais={0} />
+          <img className="img-fin" src={catcry} alt="chat triste" /> 
           <button className="btn-fin" onClick={handleRejouer}>Rejouer</button>
         </div>
       );
@@ -73,8 +76,9 @@ function App() {
       return (
         <div className="jeu-fin">
           <h1>Jeu du pendu</h1>
-          <p>Bravo ! Vous avez deviné le mot {mot}.</p>
+          <p>Bravo ^^ ! Vous avez deviné le mot {mot}.</p>
           <AffichagePendu essais={essais} />
+          <img className="img-fin" src={cathappy} alt="chat heureux" />
           <button className="btn-fin" onClick={handleRejouer}>Rejouer</button>
         </div>
       );
